@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <style>
+
+        .maincont {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .row {
+            display: flex;
+            height: 100%;
+        }
+
+        .col-sm-9,
+        .col-md-9,
+        .col-lg-9 {
+            flex: 75%;
+            background-color: aqua;
+            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
+        }
+
+        .col-sm-3,
+        .col-md-3,
+        .col-lg-3 {
+            flex: 25%;
+            background-color: blueviolet;
+            justify-content: center;
+            align-items: center;
+            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
+        }
+
+        .hide-col {
+            flex: 0; /* Set flex to 0 to hide the column */
+        }
+
+        .hidebtn {
+            background-color: brown;
+           
+        }
+
+        .image-box {
+            width: 150px; /* Set width of the image box */
+            height: 150px; /* Set height of the image box */
+            margin-bottom: 20px; /* Optional: Add margin between image boxes */
+            transition: height 0.5s, width 0.5s, opacity 0.5s; /* Add a smooth transition effect for height */
+        }
+
+        .iconboxgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-rows: repeat(3, 1fr);    /* 2 rows */
+            gap: 10px; /* Optional: Add gap between image boxes */
+        }
+
+        .image-box:hover {
+            transform: scale(1.08);
+        }
+
+    </style>
+
+    <div class="maincont">
+        <div class="row">
+            <div id="mainbar" class="col-sm-9 col-md-9 col-lg-9 d-flex justify-content-end align-items-center">
+                <button type="button" class="hidebtn" onclick="toggleColOne()">Hide</button>
+            </div>
+            <div id="toolbar" class="col-sm-3 col-md-3 col-lg-3 d-flex justify-content-center align-items-center ">
+                <div class="iconboxgrid">
+                    <div class="image-box" style="background-color: yellow;"></div>
+                    <div class="image-box" style="background-color: green;"></div>
+                    <div class="image-box" style="background-color: red;"></div>
+                    <div class="image-box" style="background-color:darkgoldenrod;"></div>
+                    <div class="image-box" style="background-color:cadetblue;"></div>
+                    <div class="image-box" style="background-color:violet;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+        function toggleColOne() {
+            var colOne = document.getElementById('toolbar');
+            colOne.classList.toggle('hide-col');
+
+            var imageBoxes = document.querySelectorAll('.image-box');
+            imageBoxes.forEach(function (box) {
+                box.style.height = colOne.classList.contains('hide-col') ? '0' : '150px';
+                box.style.width = colOne.classList.contains('hide-col') ? '0' : '150px';
+                box.style.opacity = colOne.classList.contains('hide-col') ? '0' : '1';
+            });
+        }
+    </script>
+</body>
+</html>
