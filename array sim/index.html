@@ -6,116 +6,30 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <style>
-        .maincont {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-        }
+       
 
-        #headbar {
-
-
-            font-size: 20px;
-            color: #ffffff;
-            font-weight: bolder;
-            padding-left: 20px;
-            padding-top: 10px;
-
-            background-color: #010756;
-            height: 50px;
-            position: relative;
-            width: 100%;
-        }
-
-        #actionbar {
-            background-color: #000000;
-            height: 50px;
-            position: absolute;
-            width: 100%;
-        }
-
-        .row {
-            display: flex;
-            height: 100%;
-           /* margin-top: 30px; Adjusted margin to account for the height of the headbar */
-        }
-
-        .col-sm-9,
-        .col-md-9,
-        .col-lg-9 {
-            flex: 75%;
-            background-color:#EDECED;
-            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
-        }
-
-        .col-sm-3,
-        .col-md-3,
-        .col-lg-3 {
-            flex: 25%;
-            background-color: #e99800;;
-            justify-content: center;
-            align-items: center;
-            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
-        }
-
-        .hide-col {
-            flex: 0; /* Set flex to 0 to hide the column */
-        }
-
-        .hidebtn {
-            background-color: #7360DF;
-        }
-
-        .image-box {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-            transition: height 0.5s, width 0.5s, opacity 0.5s;
-        }
-
-        .iconboxgrid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 20px;
-            grid-row-gap: 8px;
-        }
-
-        .image-box:hover {
-            transform: scale(1.08);
-        }
-
-        .actionbar{
-
-            flex: 100%;
-
-        }
-
-        .action-box{
-
-            width: 30px;
-            height: 30px;
-            margin-bottom: 20px;
-
-        }
     </style>
 
     <div class="maincont ">
         <div id="headbar">PV Array Simulator</div>
-        <div id="actionbar">
-                <div class="action-box" style="background-color:#EEF5FF;"></div>
-                <div class="action-box" style="background-color:#EEF5FF;"></div>
-        </div>
+        <div class="actionbar">
+            <img class = "SP_btn" src="res/play.png" alt="Description of the image">
+            <img class = "SP_btn" src="res/stop-button.png " alt="Description of the image">
+
+
+        </div>     
         <div class="row">
             <div id="mainbar" class="col-sm-9 col-md-9 col-lg-9 d-flex justify-content-end align-items-center">
-                <button type="button" class="hidebtn" onclick="toggleColOne()">Hide</button>
+                <img class = "hide_btn" src="res/menu.png " alt="Description of the image" onclick="toggleColOne()">
+                <img id="draggableImage" src="res/Solar_Pannel.png" draggable="true" ondragstart="drag(event)" />
             </div>
             <div id="toolbar" class="col-sm-3 col-md-3 col-lg-3 d-flex justify-content-center align-items-center">
                 <div class="iconboxgrid">
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
+                    <img class="image-box" src="res/Solar_Pannel.png" alt="Description of the image" onclick="toggleImage()">
                     <div class="image-box" style="background-color:#EEF5FF;"></div>
                     <div class="image-box" style="background-color:#EEF5FF;"></div>
                     <div class="image-box" style="background-color:#EEF5FF;"></div>
@@ -129,19 +43,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-    <script>
-        function toggleColOne() {
-            var colOne = document.getElementById('toolbar');
-            colOne.classList.toggle('hide-col');
+     <script src="function.js"></script>
 
-            var imageBoxes = document.querySelectorAll('.image-box');
-            imageBoxes.forEach(function (box) {
-                box.style.height = colOne.classList.contains('hide-col') ? '0' : '150px';
-                box.style.width = colOne.classList.contains('hide-col') ? '0' : '150px';
-                box.style.opacity = colOne.classList.contains('hide-col') ? '0' : '1';
-            });
-        }
+    <script>
+        
+
     </script>
+
 
 </body>
 </html>

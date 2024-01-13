@@ -1,147 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    canvas {
+      border: 1px solid #ddd;
+      cursor: move;
+    }
+  </style>
+  <title>Draggable Points</title>
 </head>
 <body>
-    <style>
-        .maincont {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-        }
+  <canvas id="myCanvas" width="500" height="500"></canvas>
+  <button id="connectButton">Connect Points</button>
 
-        #headbar {
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    const pointA = { x: 50, y: 50 };
+    const pointB = { x: 200, y: 200 };
+    let connectPointsFlag = false;
+    let isDraggingPointA = false;
+    let isDraggingPointB = false;
 
+    // Initial draw to display points
+    draw();
 
-            font-size: 20px;
-            color: #ffffff;
-            font-weight: bolder;
-            padding-left: 20px;
-            padding-top: 10px;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            background-color: #010756;
-            height: 50px;
-            position: relative;
-            width: 100%;
-        }
+      // Draw the points
+      drawPoint(pointA.x, pointA.y);
+      drawPoint(pointB.x, pointB.y);
 
-        #actionbar {
-            background-color: #000000;
-            height: 50px;
-            position: absolute;
-            width: 100%;
-        }
+      // Draw the connection if the flag is set
+      if (connectPointsFlag) {
+        ctx.beginPath();
+        ctx.moveTo(pointA.x, pointA.y);
+        ctx.lineTo(pointB.x, pointB.y);
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
 
-        .row {
-            display: flex;
-            height: 100%;
-           /* margin-top: 30px; Adjusted margin to account for the height of the headbar */
-        }
+    function drawPoint(x, y) {
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
 
-        .col-sm-9,
-        .col-md-9,
-        .col-lg-9 {
-            flex: 75%;
-            background-color:#EDECED;
-            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
-        }
+    function isPointClicked(point, mouseX, mouseY) {
+      const distance = Math.sqrt((mouseX - point.x) ** 2 + (mouseY - point.y) ** 2);
+      return distance <= 5;
+    }
 
-        .col-sm-3,
-        .col-md-3,
-        .col-lg-3 {
-            flex: 25%;
-            background-color: #e99800;;
-            justify-content: center;
-            align-items: center;
-            transition: flex 0.5s; /* Optional: Add a smooth transition effect */
-        }
+    function onMouseMove(event) {
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
-        .hide-col {
-            flex: 0; /* Set flex to 0 to hide the column */
-        }
+      if (isDraggingPointA) {
+        pointA.x = mouseX;
+        pointA.y = mouseY;
+      } else if (isDraggingPointB) {
+        pointB.x = mouseX;
+        pointB.y = mouseY;
+      }
 
-        .hidebtn {
-            background-color: #7360DF;
-        }
+      draw();
+    }
 
-        .image-box {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-            transition: height 0.5s, width 0.5s, opacity 0.5s;
-        }
+    function onMouseUp() {
+      isDraggingPointA = false;
+      isDraggingPointB = false;
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseup', onMouseUp);
+    }
 
-        .iconboxgrid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-            gap: 20px;
-            grid-row-gap: 8px;
-        }
+    canvas.addEventListener('mousedown', onMouseDown);
 
-        .image-box:hover {
-            transform: scale(1.08);
-        }
+    function onMouseDown(event) {
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
-        .actionbar{
+      if (isPointClicked(pointA, mouseX, mouseY)) {
+        isDraggingPointA = true;
+      } else if (isPointClicked(pointB, mouseX, mouseY)) {
+        isDraggingPointB = true;
+      }
 
-            flex: 100%;
+      if (isDraggingPointA || isDraggingPointB) {
+        canvas.addEventListener('mousemove', onMouseMove);
+        canvas.addEventListener('mouseup', onMouseUp);
+      }
+    }
 
-        }
+    // Add event listener for button click
+    document.getElementById('connectButton').addEventListener('click', connectPoints);
 
-        .action-box{
-
-            width: 30px;
-            height: 30px;
-            margin-bottom: 20px;
-
-        }
-    </style>
-
-    <div class="maincont ">
-        <div id="headbar">PV Array Simulator</div>
-        <div id="actionbar">
-                <div class="action-box" style="background-color:#EEF5FF;"></div>
-                <div class="action-box" style="background-color:#EEF5FF;"></div>
-        </div>
-        <div class="row">
-            <div id="mainbar" class="col-sm-9 col-md-9 col-lg-9 d-flex justify-content-end align-items-center">
-                <button type="button" class="hidebtn" onclick="toggleColOne()">Hide</button>
-            </div>
-            <div id="toolbar" class="col-sm-3 col-md-3 col-lg-3 d-flex justify-content-center align-items-center">
-                <div class="iconboxgrid">
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                    <div class="image-box" style="background-color:#EEF5FF;"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
-    <script>
-        function toggleColOne() {
-            var colOne = document.getElementById('toolbar');
-            colOne.classList.toggle('hide-col');
-
-            var imageBoxes = document.querySelectorAll('.image-box');
-            imageBoxes.forEach(function (box) {
-                box.style.height = colOne.classList.contains('hide-col') ? '0' : '150px';
-                box.style.width = colOne.classList.contains('hide-col') ? '0' : '150px';
-                box.style.opacity = colOne.classList.contains('hide-col') ? '0' : '1';
-            });
-        }
-    </script>
-
+    // Function to connect points
+    function connectPoints() {
+      connectPointsFlag = true;
+      draw();
+    }
+  </script>
 </body>
 </html>

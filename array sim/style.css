@@ -1,0 +1,115 @@
+.maincont {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+#headbar {
+    font-size: 20px;
+    color: #ffffff;
+    font-weight: bolder;
+    padding-left: 20px;
+    padding-top: 10px;
+
+    background-color: #010756;
+    height: 50px;
+    position: relative;
+    width: 100%;
+}
+
+.actionbar {
+    background-color: #000000;
+    height: 50px;
+    position: absolute;
+    width: 100%;
+    display: flex; /* Use flexbox to align items in a row */
+}
+
+.row {
+    display: flex;
+    height: 100%;
+   /* margin-top: 30px; Adjusted margin to account for the height of the headbar */
+}
+
+.col-sm-9,
+.col-md-9,
+.col-lg-9 {
+    flex: 75%;
+    background-color:#EDECED;
+    transition: flex 0.5s; /* Optional: Add a smooth transition effect */
+}
+
+.col-sm-3,
+.col-md-3,
+.col-lg-3 {
+    flex: 25%;
+    background-color: #e99800;;
+    justify-content: center;
+    align-items: center;
+    transition: flex 0.5s; /* Optional: Add a smooth transition effect */
+}
+
+.hide-col {
+    flex: 0; /* Set flex to 0 to hide the column */
+}
+
+.hidebtn {
+    background-color: #7360DF;
+}
+
+.image-box {
+    width: 150px;
+    height: 150px;   
+    margin-bottom: 20px;
+    transition: height 0.5s, width 0.5s, opacity 0.5s;
+}
+
+.iconboxgrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px;
+    grid-row-gap: 8px;
+}
+
+.image-box:hover {
+    transform: scale(1.08);
+}
+
+.SP_btn:hover {
+    transform: scale(1.08);
+}
+.hide_btn:hover {
+    transform: scale(1.08);
+}
+
+.actionbar{
+
+    flex: 100%;
+    padding: 10px;
+    padding-left: 20px;
+
+}
+
+.actionbar img{
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+}
+
+.hide_btn{
+
+    width: 30px;
+    height: 30px;
+}
+#draggableImage {
+    display: none; /* Initially hide the image */
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    cursor: move;
+}
+.mainbarmask{
+
+    position: absolute;
+}
